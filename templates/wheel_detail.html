@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ wheel.name }} — Envy Forged{% endblock %}
+{% block head %}
+<style>
+.detail-wrap{padding:4rem 3rem}
+.back-link{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:3rem;transition:color 0.2s}
+.back-link:hover{color:var(--gold)}
+.finish-grid{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1.5rem 0}
+.finish-chip{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:0.4rem 0.9rem;border:1px solid var(--border);color:var(--ink-light)}
+.finish-chip.premium{border-color:var(--gold);color:var(--gold)}
+.fitment-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin:1.5rem 0}
+.fitment-chip{font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.5rem 1rem;border:1px solid var(--border);color:var(--ink-light)}
+.quote-cta{margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.pricing-note{font-family:var(--mono);font-size:10px;color:var(--ink-light);letter-spacing:0.1em;margin-top:0.5rem}
+@media(max-width:900px){.detail-wrap{padding:2rem 1.5rem}}
+</style>
+{% endblock %}
+{% block content %}
+<div class="detail-wrap">
+  <a href="/catalog" class="back-link">← Back to Catalog</a>
+  <div class="detail-grid">
+    <div class="detail-img">{{ wheel.sku }}<br>PHOTO COMING</div>
+    <div>
+      <div class="detail-sku">{{ wheel.sku }}</div>
+      <h1 class="detail-name">{{ wheel.name }}</h1>
+      <p class="detail-construction">{{ label }}</p>
+      <p class="detail-desc">{{ wheel.description }}</p>
+      <div class="detail-ref">Market reference: {{ wheel.market_ref }}</div>
+      <p class="section-label">Available Finishes</p>
+      <div class="finish-grid">
+        {% for f in finishes %}
+        <span class="finish-chip {% if f.tier=='premium' %}premium{% endif %}">{{ f.name }}{% if f.tier=='premium' %} +{% endif %}</span>
+        {% endfor %}
+      </div>
+      <p class="section-label" style="margin-top:1.5rem">Fitment Types</p>
+      <div class="fitment-row">
+        {% for ft in fitment_types %}<span class="fitment-chip">{{ ft }}</span>{% endfor %}
+      </div>
+      <p class="section-label" style="margin-top:1.5rem">Pricing (per wheel · USD)</p>
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Standard</th>
+            <th>Premium</th>
+            {% if pricing and pricing[0]['processing_fee'] > 0 %}<th>Processing Fee</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% set seen = [] %}
+          {% for p in pricing %}
+          {% if p.finish_tier == 'standard' and p.size_inch not in seen %}
+          {% set _ = seen.append(p.size_inch) %}
+          <tr>
+            <td>{{ p.size_inch }}"</td>
+            <td>${{ p.base_usd }}</td>
+            <td>{% for pp in pricing if pp.size_inch == p.size_inch and pp.finish_tier == 'premium' %}${{ pp.base_usd }}{% endfor %}</td>
+            {% if p.processing_fee > 0 %}<td>+${{ p.processing_fee }}/component</td>{% endif %}
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if pricing and pricing[0]['processing_fee'] > 0 %}
+      <p class="pricing-note">* Multi-piece wheels require an additional $50 processing fee per component per wheel.</p>
+      {% endif %}
+      <div class="quote-cta">
+        <a href="/quote?sku={{ wheel.sku }}" class="btn-primary">Request Quote for This Wheel</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
