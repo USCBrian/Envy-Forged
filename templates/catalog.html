@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Catalog — Envy Forged{% endblock %}
+{% block head %}
+<style>
+.catalog-header{padding:4rem 3rem 3rem;border-bottom:1px solid var(--border)}
+.catalog-title{font-size:3rem;font-weight:300;margin-top:1rem}
+.catalog-body{padding:3rem}
+@media(max-width:900px){.catalog-header,.catalog-body{padding:2rem 1.5rem}}
+</style>
+{% endblock %}
+{% block content %}
+<div class="catalog-header">
+  <p class="section-label">Full Collection</p>
+  <h1 class="catalog-title">40 designs.<br>5 constructions.</h1>
+</div>
+<div class="catalog-body">
+  <div class="filter-tabs">
+    <a href="/catalog" class="filter-tab {% if active=='all' %}active{% endif %}">All ({{ wheels|length }})</a>
+    <a href="/catalog?construction=one-piece" class="filter-tab {% if active=='one-piece' %}active{% endif %}">One-Piece</a>
+    <a href="/catalog?construction=two-piece" class="filter-tab {% if active=='two-piece' %}active{% endif %}">Two-Piece</a>
+    <a href="/catalog?construction=three-piece" class="filter-tab {% if active=='three-piece' %}active{% endif %}">Three-Piece</a>
+    <a href="/catalog?construction=beadlock" class="filter-tab {% if active=='beadlock' %}active{% endif %}">Beadlock</a>
+    <a href="/catalog?construction=htype" class="filter-tab {% if active=='htype' %}active{% endif %}">Off-Road</a>
+    <a href="/catalog?construction=carbon" class="filter-tab {% if active=='carbon' %}active{% endif %}">Carbon</a>
+  </div>
+  <div class="wheel-grid">
+    {% for w in wheels %}
+    <a href="/wheel/{{ w.sku }}" class="wheel-card">
+      <div class="wheel-card-img">{{ w.sku }}</div>
+      <div class="wheel-card-body">
+        <div class="wheel-card-sku">{{ w.sku }}</div>
+        <div class="wheel-card-name">{{ w.name }}</div>
+        <div class="wheel-card-sizes">{{ w.sizes }}</div>
+        <div class="wheel-card-construction">{{ labels.get(w.construction, w.construction) }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
