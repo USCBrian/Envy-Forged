@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Envy Forged — Forged Wheels, Direct{% endblock %}
+{% block head %}
+<style>
+.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 3rem;gap:4rem;border-bottom:1px solid var(--border)}
+.hero-left{padding:4rem 0}
+.hero-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.hero-headline{font-size:clamp(3rem,5vw,5.5rem);font-weight:300;line-height:1.05;margin-bottom:2rem;letter-spacing:-0.01em}
+.hero-headline em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:1.15rem;color:var(--ink-mid);max-width:440px;line-height:1.7;margin-bottom:3rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-right{display:flex;align-items:center;justify-content:center;aspect-ratio:1;background:var(--cream-dark);border:1px solid var(--border);font-family:var(--mono);font-size:12px;letter-spacing:0.2em;color:var(--ink-light)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.stat{padding:2.5rem 3rem;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-num{font-size:2.5rem;font-weight:300;color:var(--ink);line-height:1}
+.stat-label{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-light);margin-top:0.5rem}
+.featured-section{padding:6rem 3rem}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem}
+.section-title{font-size:2.2rem;font-weight:300}
+.why-section{background:var(--ink);color:var(--cream);padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem}
+.why-left .section-label{color:var(--gold)}
+.why-title{font-size:2.8rem;font-weight:300;line-height:1.1;margin-bottom:1.5rem}
+.why-body{font-size:1.05rem;line-height:1.8;color:rgba(245,240,232,0.75)}
+.why-points{display:flex;flex-direction:column;gap:2rem;padding-top:1rem}
+.why-point-label{font-family:var(--mono);font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.why-point-text{font-size:1rem;color:rgba(245,240,232,0.75);line-height:1.6}
+.cta-band{padding:5rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);gap:2rem;flex-wrap:wrap}
+.cta-band-text{font-size:2rem;font-weight:300}
+.cta-band-text em{font-style:italic;color:var(--gold)}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding:3rem 1.5rem}.hero-right{display:none}.stats-bar{grid-template-columns:repeat(2,1fr)}.stat{padding:2rem 1.5rem}.featured-section,.why-section,.cta-band{padding:4rem 1.5rem}.why-section{grid-template-columns:1fr}.section-head{flex-direction:column;align-items:flex-start;gap:1rem}}
+</style>
+{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Direct-Import Forged Wheels</p>
+    <h1 class="hero-headline">The wheel<br>market is<br><em>broken.</em></h1>
+    <p class="hero-sub">You're paying $2,000–$4,000 per wheel for a name. Envy Forged sources the same forged aluminum directly — same factory standards, same materials — at a fraction of the cost.</p>
+    <div class="hero-actions">
+      <a href="/catalog" class="btn-primary">Browse Catalog</a>
+      <a href="/quote" class="btn-ghost">Get a Quote</a>
+    </div>
+  </div>
+  <div class="hero-right">WHEEL PHOTO COMING</div>
+</section>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">40</div><div class="stat-label">Designs Available</div></div>
+  <div class="stat"><div class="stat-num">$195</div><div class="stat-label">Starting Per Wheel</div></div>
+  <div class="stat"><div class="stat-num">17–30"</div><div class="stat-label">Size Range</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Construction Types</div></div>
+</div>
+<section class="featured-section">
+  <div class="section-head">
+    <div>
+      <p class="section-label">Featured Designs</p>
+      <h2 class="section-title">Most requested.</h2>
+    </div>
+    <a href="/catalog" class="btn-ghost">View All 40</a>
+  </div>
+  <div class="wheel-grid">
+    {% for w in featured %}
+    <a href="/wheel/{{ w.sku }}" class="wheel-card">
+      <div class="wheel-card-img">{{ w.sku }}</div>
+      <div class="wheel-card-body">
+        <div class="wheel-card-sku">{{ w.sku }}</div>
+        <div class="wheel-card-name">{{ w.name }}</div>
+        <div class="wheel-card-sizes">{{ w.sizes }}</div>
+        <div class="wheel-card-construction">{{ labels.get(w.construction, w.construction) }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+<section class="why-section">
+  <div class="why-left">
+    <p class="section-label">Why Envy Forged</p>
+    <h2 class="why-title">Built different.<br>Priced honestly.</h2>
+    <p class="why-body">The premium wheel industry charges for branding. We charge for product. Taizhou Gushi Technology — IATF16949 and ISO9001 certified, 100,000 wheels annually — is the same supply chain that feeds brands you already know.</p>
+  </div>
+  <div class="why-points">
+    <div class="why-point"><div class="why-point-label">Direct Import</div><div class="why-point-text">No distributors. No warehouses. No markup stacking. You order, we source, it ships to you.</div></div>
+    <div class="why-point"><div class="why-point-label">Certified Manufacturing</div><div class="why-point-text">IATF16949, ISO9001, DOT certified. Same certifications as OEM suppliers.</div></div>
+    <div class="why-point"><div class="why-point-label">Built to Your Spec</div><div class="why-point-text">Every wheel is made to order. Your fitment, your finish, your size.</div></div>
+    <div class="why-point"><div class="why-point-label">Real Pricing</div><div class="why-point-text">What you'd pay $2,000–$4,000 for elsewhere starts at $195 here. The quality is the same. The name isn't.</div></div>
+  </div>
+</section>
+<div class="cta-band">
+  <p class="cta-band-text">Ready to spec your<br><em>next set?</em></p>
+  <div style="display:flex;gap:1rem">
+    <a href="/catalog" class="btn-primary">Browse Catalog</a>
+    <a href="/quote" class="btn-ghost">Request Quote</a>
+  </div>
+</div>
+{% endblock %}
