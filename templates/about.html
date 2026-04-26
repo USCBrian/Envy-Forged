@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}About — Envy Forged{% endblock %}
+{% block head %}
+<style>
+.about-wrap{max-width:900px;padding:6rem 3rem}
+.about-hero{font-size:clamp(2.5rem,4vw,4rem);font-weight:300;line-height:1.1;margin:1rem 0 3rem}
+.about-hero em{font-style:italic;color:var(--gold)}
+.about-block{margin-bottom:3.5rem;padding-bottom:3.5rem;border-bottom:1px solid var(--border)}
+.about-block:last-of-type{border-bottom:none}
+.about-block h3{font-size:1.5rem;font-weight:400;margin-bottom:1rem}
+.about-block p{font-size:1.05rem;color:var(--ink-mid);line-height:1.8}
+@media(max-width:900px){.about-wrap{padding:3rem 1.5rem}}
+</style>
+{% endblock %}
+{% block content %}
+<div class="about-wrap container">
+  <p class="section-label">About</p>
+  <h1 class="about-hero">Forged.<br>Direct.<br><em>Honest pricing.</em></h1>
+  <div class="about-block">
+    <h3>The Problem</h3>
+    <p>The wheel industry runs on brand margin. A forged monoblock wheel that costs $200 to manufacture lands on a dealer shelf at $1,800–$4,000 after distributors, marketing budgets, and brand licensing are stacked on top. The product doesn't change. The price does.</p>
+  </div>
+  <div class="about-block">
+    <h3>The Source</h3>
+    <p>Envy Forged sources directly from Taizhou Gushi Technology Co., Ltd. — a Taixing, China manufacturer certified to IATF16949 and ISO9001, DOT-registered for the US market, with annual output of 100,000 forged aluminum wheels exported to dozens of countries. The same supply chain the industry already uses — without the markup stacking.</p>
+  </div>
+  <div class="about-block">
+    <h3>The Model</h3>
+    <p>Every wheel is built to order. No inventory. No guessing. You spec the design, size, finish, and fitment. We confirm the order with the manufacturer and get your wheels built to your exact measurements. Lead times vary — included in every quote response.</p>
+  </div>
+  <div class="about-block">
+    <h3>The Fitment Engine</h3>
+    <p>We use real clearance math — not generic fitment guides. Every quote includes a fitment spec review based on your vehicle, your suspension setup, and your intended offset style. OEM, Tuck, Flush, or Poke — we tell you exactly what fits and what modifications are required if the spec is marginal.</p>
+  </div>
+  <div class="about-block">
+    <h3>Envy LLC</h3>
+    <p>Envy Forged is a brand under Envy LLC — a Colorado-based holding company. We build everything in-house. No contractors, no outsourcing. We don't stock what we can't stand behind.</p>
+  </div>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="/catalog" class="btn-primary">Browse the Catalog</a>
+    <a href="/quote" class="btn-ghost">Get a Quote</a>
+  </div>
+</div>
+{% endblock %}
