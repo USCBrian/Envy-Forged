@@ -1,0 +1,39 @@
+import sqlite3, os
+
+DB_PATH = os.environ.get('DB_PATH', '/app/data/envy.db')
+
+def get_db():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    db = get_db()
+    c = db.cursor()
+    c.executescript("""
+    CREATE TABLE IF NOT EXISTS wheels (
+        id INTEGER PRIMARY KEY,
+        sku TEXT UNIQUE,
+        name TEXT,
+        construction TEXT,
+        sizes TEXT,
+        description TEXT,
+        market_ref TEXT,
+        popular INTEGER DEFAULT 1,
+        sort_order INTEGER DEFAULT 0
+    );
+    CREATE TABLE IF NOT EXISTS finishes (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        code TEXT,
+        tier TEXT
+    );
+    CREATE TABLE IF NOT EXISTS pricing (
+        id INTEGER PRIMARY KEY,
+        construction TEXT,
+        size_inch INTEGER,
+        finish_tier TEXT,
+        base_usd INTEGER,
+        retail_usd INTEGER,
+        processing_fee INTEGER DEFAULT​​​​​​​​​​​​​​​​
